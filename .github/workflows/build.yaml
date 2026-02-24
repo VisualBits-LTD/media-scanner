@@ -66,15 +66,19 @@ jobs:
 
   build:
     name: Build binaries
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 20
 
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - windows-latest
-          - ubuntu-latest
+        include:
+          - runner: windows-latest
+            artifactName: windows-latest
+          - runner: ubuntu-latest
+            artifactName: ubuntu-latest
+          - runner: macos-13
+            artifactName: macos-13
 
     steps:
       - uses: actions/checkout@v6
@@ -91,13 +95,13 @@ jobs:
           PKG_CACHE_PATH: ${{ runner.temp }}
         run: |
           corepack enable
-          yarn install
+          yarn install --mode=skip-build
           yarn build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ matrix.os }}
+          name: ${{ matrix.artifactName }}
           path: deploy
 
   release:

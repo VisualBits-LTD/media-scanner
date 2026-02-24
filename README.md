@@ -68,6 +68,15 @@ Be aware that because of the native extensions, you may only be able to build fo
   - `yarn build-win32-x64`
 - On Linux
   - `yarn build-linux-x64` or `yarn build-linux-arm64` depending on cpu architecture
+- On macOS
+  - `yarn build` (on Intel)
+  - `yarn node tools/build.mjs darwin x64` (from Apple Silicon, for x64 compatibility)
+- Run built executable
+  - macOS: `yarn run-macos`
+  - Linux: `yarn run-linux`
+  - Windows: `yarn run-windows`
+
+Note: the current `leveldown` dependency ships macOS prebuilds for `darwin-x64`, so CI publishes an Intel-compatible macOS binary (`macos-13`). Apple Silicon users can run this via Rosetta.
 
 The built files will be placed in `./deploy`, make sure you copy all non-zipfiles into the main CasparCG directory.
 

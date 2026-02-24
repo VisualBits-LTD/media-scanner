@@ -19,7 +19,9 @@ await build({
 	minify: false,
 	platform: 'node',
 	target: ['node24'],
-	external: [],
+	// Keep fsevents external: bundling its native .node binary breaks esbuild,
+	// while runtime file watching still works when fsevents is present.
+	external: ['fsevents'],
 	outfile: 'deploy/scanner.js',
 })
 
@@ -50,7 +52,7 @@ if (!unpacked) {
 	// Run pkg
 	const filename = platform === 'win32' ? 'scanner.exe' : 'scanner'
 	try {
-		cp.execSync(`pkg -t node24-${platform} . -o ${filename}`, { cwd: './deploy' })
+		cp.execSync(`pkg -t node24-${platform}-${arch} . -o ${filename}`, { cwd: './deploy' })
 	} catch (error) {
 		console.log(error.stdout.toString())
 		// eslint-disable-next-line n/no-process-exit
