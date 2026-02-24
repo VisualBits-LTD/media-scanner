@@ -76,7 +76,7 @@ Be aware that because of the native extensions, you may only be able to build fo
   - Linux: `yarn run-linux`
   - Windows: `yarn run-windows`
 
-Note: the current `leveldown` dependency ships macOS prebuilds for `darwin-x64`, so CI publishes an Intel-compatible macOS binary (`macos-13`). Apple Silicon users can run this via Rosetta.
+Note: the current `leveldown` dependency ships macOS prebuilds for `darwin-x64`, so CI runs on `macos-latest` and explicitly publishes an Intel-compatible macOS binary (`darwin-x64`). Apple Silicon users can run this via Rosetta.
 
 The built files will be placed in `./deploy`, make sure you copy all non-zipfiles into the main CasparCG directory.
 

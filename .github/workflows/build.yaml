@@ -77,8 +77,8 @@ jobs:
             artifactName: windows-latest
           - runner: ubuntu-latest
             artifactName: ubuntu-latest
-          - runner: macos-13
-            artifactName: macos-13
+          - runner: macos-latest
+            artifactName: macos-latest
 
     steps:
       - uses: actions/checkout@v6
@@ -96,7 +96,11 @@ jobs:
         run: |
           corepack enable
           yarn install --mode=skip-build
-          yarn build
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            yarn node tools/build.mjs darwin x64
+          else
+            yarn build
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
